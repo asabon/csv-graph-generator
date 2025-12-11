@@ -1,10 +1,11 @@
-version: 1
+version: 2
 preferences:
-  language: "Japanese"
+  language: "English"
 
 rules:
-  - "会話、計画書(plan)、タスクリスト(task)などの内部ドキュメントは日本語で記述してください。"
-  - "公開するコードのコメント、README、ドキュメント(コードベースに含まれるもの)は英語で記述してください。"
-  - "コードの変更は最小限に留め、変更理由を明確にしてください。"
-  - "不明確な点は推測せずに質問してください。"
-  - "可読性向上のため、全角括弧は使用せず、半角括弧を使用してください。"
+  - "Internal communications (chat, plans, tasks) and intermediate artifacts (e.g., .work/progress_*.md) should be written in the language specified in the user configuration (config.yml)."
+  - "Public code comments, READMEs, and documentation (included in the codebase) must be written in English."
+  - "Keep code changes minimal and clearly state the reason for the changes."
+  - "Do not make assumptions about unclear points, ask questions instead."
+  - "For better readability, use half-width parentheses instead of full-width parentheses."
+  - "The .work directory is git-ignored. If writing to this directory is required, create or edit files via run_command instead of standard tools. Note that this method is permitted ONLY for the .work directory."
