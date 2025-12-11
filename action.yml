@@ -17,5 +17,5 @@ inputs:
     description: 'Title of the graph'
     required: false
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: 'docker'
+  image: 'Dockerfile'
