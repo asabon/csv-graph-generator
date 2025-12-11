@@ -1,0 +1,6 @@
+# User Configuration File
+# Copy this file to config.yml and customize it.
+
+# Language setting for the AI assistant communication
+# Options: 'ja' (Japanese), 'en' (English), etc.
+language: "ja"

@@ -1,9 +1,10 @@
 ---
-description: 現在の進捗を日時付きファイルに保存する
+description: Save current progress to a timestamped file
 ---
 
 // turbo
-1. 現在の日時を `YYYYMMDD_HHMM` 形式で取得してください。
-2. 現在のセッションの要約（完了したタスク、現在の状況、次のステップ）を作成してください。
-3. その要約を `work/progress_<TIMESTAMP>.md` に保存してください。
-4. 保存が完了したことをユーザーに報告してください。
+1. Get the current date and time in `YYYYMMDD_HHMM` format.
+2. Create a summary of the current session (completed tasks, current status, next steps).
+3. Save the summary to `.work/progress_<TIMESTAMP>.md` using the `run_command` tool (as `.work` is git-ignored and write_to_file is blocked).
+   Example: `echo "content" > .work/progress_<TIMESTAMP>.md`
+4. Report to the user that the save is complete.
