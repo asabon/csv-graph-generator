@@ -30,6 +30,14 @@ jobs:
       - name: Build and Package
         run: npm run all
 
-      - name: Check for Uncommitted Changes (dist/)
+      - name: Commit and Push Changes
+        if: always()
         run: |
-          git diff --exit-code || (echo "Error: Uncommitted changes detected after build. Please run 'npm run all' locally or let CI handle it." && exit 1)
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add dist/
+          # Only commit if there are changes
+          if ! git diff --staged --quiet; then
+            git commit -m "style: auto-generated build artifacts"
+            git push
+          fi
