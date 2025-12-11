@@ -1,0 +1,65 @@
+name: Test Action
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-graph-generation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Action のビルドが必要（dist がコミットされている前提だが、念のため依存関係を入れるなど）
+      # ただし、現在のフローでは push 時に check-build.yml が走って dist を生成/更新してくれる。
+      # しかし、この test-action.yml と check-build.yml は並行して走る可能性がある。
+      # dist がまだ更新されていない古い状態のまま走るリスクがあるが、
+      # 同一 commit であれば dist は前回の push のものか、あるいは今回含まれているものになる。
+      # feature/initial-setup では "Build & Package" が走って dist を commit しているので、
+      # 本来的にはその commit を pull してから走るのが理想だが、Actions の仕様上それは難しい。
+      # そのため、このテストワークフロー内でも念のためビルドを行うか（時間がかかる）、
+      # 単にとりあえず現在の dist で動かすか。
+      # check-build.yml が dist を push すると、新たな commit になるため、
+      # 新たな run がトリガーされるはず。
+      # つまり:
+      # 1. ユーザー push (commit A) -> check-build (A) & test-action (A) が起動
+      # 2. test-action (A) は commit A の dist (まだ古いかも) で動く
+      # 3. check-build (A) が dist を更新して push (commit B)
+      # 4. commit B によって check-build (B) & test-action (B) が起動
+      # 5. test-action (B) は最新の dist で動く
+      # なので、単純に `uses: ./` で実行すればよい。
+
+      - name: Install Dependencies for Canvas (Runtime)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
+      - name: Generate Bar Chart
+        id: bar-chart
+        uses: ./
+        with:
+          csv-file: '.github/test-data/sample.csv'
+          output-file: 'bar-chart.png'
+          graph-type: 'bar'
+          title: 'Monthly Sales (Bar)'
+
+      - name: Generate Line Chart
+        id: line-chart
+        uses: ./
+        with:
+          csv-file: '.github/test-data/sample.csv'
+          output-file: 'line-chart.png'
+          graph-type: 'line'
+          title: 'Monthly Sales (Line)'
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-graphs
+          path: |
+            bar-chart.png
+            line-chart.png
