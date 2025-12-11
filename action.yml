@@ -1,0 +1,21 @@
+name: 'CSV Graph Generator'
+description: 'Generates a graph image from a CSV file.'
+author: 'asabon'
+inputs:
+  csv-file:
+    description: 'Path to the input CSV file'
+    required: true
+  output-file:
+    description: 'Path where the output image will be saved'
+    required: true
+    default: 'graph.png'
+  graph-type:
+    description: 'Type of graph to generate (bar, line, pie, etc.)'
+    required: false
+    default: 'bar'
+  title:
+    description: 'Title of the graph'
+    required: false
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
