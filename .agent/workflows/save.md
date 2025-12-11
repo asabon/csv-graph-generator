@@ -1,7 +1,8 @@
 ---
-description: description: 現在の進捗を日時付きファイルに保存する
+description: 現在の進捗を日時付きファイルに保存する
 ---
 
+// turbo
 1. 現在の日時を `YYYYMMDD_HHMM` 形式で取得してください。
 2. 現在のセッションの要約（完了したタスク、現在の状況、次のステップ）を作成してください。
 3. その要約を `work/progress_<TIMESTAMP>.md` に保存してください。

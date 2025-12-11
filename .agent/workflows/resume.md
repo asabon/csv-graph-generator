@@ -1,5 +1,5 @@
 ---
-description: description: 前回の進捗から作業を再開する
+description: 前回の進捗から作業を再開する
 ---
 
 // turbo
