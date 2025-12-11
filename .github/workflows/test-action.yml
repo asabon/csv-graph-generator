@@ -11,10 +11,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Run the action from the current repository
-      # This will build the Docker image defined in action.yml
-
-
       - name: Generate Bar Chart
         id: bar-chart
         uses: ./

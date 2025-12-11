@@ -1,12 +1,14 @@
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/asabon/csv-graph-generator)
+![GitHub license](https://img.shields.io/github/license/asabon/csv-graph-generator)
+[![Test Action](https://github.com/asabon/csv-graph-generator/actions/workflows/test-action.yml/badge.svg)](https://github.com/asabon/csv-graph-generator/actions/workflows/test-action.yml)
+
 # CSV Graph Generator
 
 [Japanese (日本語)](./README_ja.md)
 
+
 A GitHub Action that automatically generates graph images from CSV files. It parses the input CSV data and creates visualizations (like bar charts or line charts) using Chart.js, saving them as image files. This is useful for including dynamic data visualizations in your issue comments, pull request descriptions, or report files.
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/asabon/csv-graph-generator)
-![GitHub license](https://img.shields.io/github/license/asabon/csv-graph-generator)
-[![Check Build & Package](https://github.com/asabon/csv-graph-generator/actions/workflows/check-build.yml/badge.svg)](https://github.com/asabon/csv-graph-generator/actions/workflows/check-build.yml)
 
 ## Features
 

@@ -1,12 +1,13 @@
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/asabon/csv-graph-generator)
+![GitHub license](https://img.shields.io/github/license/asabon/csv-graph-generator)
+[![Test Action](https://github.com/asabon/csv-graph-generator/actions/workflows/test-action.yml/badge.svg)](https://github.com/asabon/csv-graph-generator/actions/workflows/test-action.yml)
+
 # CSV Graph Generator (日本語)
 
 [English](./README.md)
 
-CSVファイルからグラフ画像を自動生成する GitHub Action です。入力されたCSVデータを解析し、Chart.js を使用して視覚化（棒グラフや折れ線グラフなど）を行い、画像ファイルとして保存します。IssueコメントやPull Requestの説明、レポートファイルなどに動的なデータ視覚化を含めたい場合に便利です。
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/asabon/csv-graph-generator)
-![GitHub license](https://img.shields.io/github/license/asabon/csv-graph-generator)
-[![Check Build & Package](https://github.com/asabon/csv-graph-generator/actions/workflows/check-build.yml/badge.svg)](https://github.com/asabon/csv-graph-generator/actions/workflows/check-build.yml)
+CSVファイルからグラフ画像を自動生成する GitHub Action です。入力されたCSVデータを解析し、Chart.js を使用して視覚化（棒グラフや折れ線グラフなど）を行い、画像ファイルとして保存します。IssueコメントやPull Requestの説明、レポートファイルなどに動的なデータ視覚化を含めたい場合に便利です。
 
 ## 特徴
 
