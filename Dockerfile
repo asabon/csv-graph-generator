@@ -9,19 +9,17 @@ RUN apt-get update && apt-get install -y \
     librsvg2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies
-# We use npm ci to install exactly what's in package-lock.json
-RUN npm ci --omit=dev && npm cache clean --force
+# Install ALL dependencies (including devDependencies like typescript)
+RUN npm ci
 
-# Copy source code and build
 COPY . .
+
+# Build the project (Compile TypeScript to JavaScript in /lib)
 RUN npm run build
 
-# Entry point
-ENTRYPOINT ["node", "/app/dist/index.js"]
+# Start with the compiled file (tsc outputs to lib/main.js by default config)
+ENTRYPOINT ["node", "/app/lib/main.js"]
