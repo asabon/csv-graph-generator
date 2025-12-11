@@ -21,3 +21,7 @@ runs:
   image: 'Dockerfile'
   # For faster execution, use a pre-built image from GHCR (after publishing a release):
   # image: 'docker://ghcr.io/asabon/csv-graph-generator:v1.0.0'
+
+branding:
+  icon: 'bar-chart'
+  color: 'blue'
