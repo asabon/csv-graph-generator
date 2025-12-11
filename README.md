@@ -1,1 +1,60 @@
-# csv-graph-generator
+# CSV Graph Generator
+
+[Japanese (日本語)](./README_ja.md)
+
+A GitHub Action that automatically generates graph images from CSV files. It parses the input CSV data and creates visualizations (like bar charts or line charts) using Chart.js, saving them as image files. This is useful for including dynamic data visualizations in your issue comments, pull request descriptions, or report files.
+
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/asabon/csv-graph-generator)
+![GitHub license](https://img.shields.io/github/license/asabon/csv-graph-generator)
+[![Check Build & Package](https://github.com/asabon/csv-graph-generator/actions/workflows/check-build.yml/badge.svg)](https://github.com/asabon/csv-graph-generator/actions/workflows/check-build.yml)
+
+## Features
+
+*   **CSV Parsing**: Reads data from a specified CSV file.
+*   **Graph Generation**: Generates various types of charts (bar, line, etc.) using Chart.js.
+*   **Customizable**: Supports configuration for output file path, graph type, and title.
+*   **Easy Integration**: Can be easily added to any GitHub Actions workflow.
+
+## Usage
+
+Add the following step to your workflow configuration file (e.g., `.github/workflows/generate-graph.yml`).
+
+```yaml
+steps:
+  - name: Generate Graph from CSV
+    uses: asabon/csv-graph-generator@v1
+    with:
+      csv-file: 'data/metrics.csv'
+      output-file: 'report/graph.png'
+      graph-type: 'bar'
+      title: 'Monthly Metrics'
+```
+
+### Inputs
+
+| Input | Description | Required | Default |
+| :--- | :--- | :---: | :--- |
+| `csv-file` | Path to the input CSV file. | **Yes** | N/A |
+| `output-file` | Path where the output image will be saved. | **Yes** | `graph.png` |
+| `graph-type` | Type of graph to generate (`bar`, `line`, `pie`, etc.). | No | `bar` |
+| `title` | Title of the graph to be displayed. | No | `''` |
+
+### Example CSV Format
+
+The action expects a simple CSV format where the first row contains headers. By default, the first column is used as **labels** (X-axis) and the second column as **data values** (Y-axis).
+
+```csv
+Label,Value
+January,10
+February,20
+March,15
+April,25
+```
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute to this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
