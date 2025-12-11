@@ -11,14 +11,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Run the action from the current repository
-      # This will build the Docker image defined in action.yml
-
-      - name: Install Dependencies for Canvas (Runtime)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
-
       - name: Generate Bar Chart
         id: bar-chart
         uses: ./
