@@ -1,0 +1,45 @@
+name: Check Build & Package
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install System Dependencies for Canvas
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build and Package
+        run: npm run all
+
+      - name: Commit and Push Changes
+        if: always()
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -f dist/
+          # Only commit if there are changes
+          if ! git diff --staged --quiet; then
+            git commit -m "style: auto-generated build artifacts"
+            git push
+          fi
