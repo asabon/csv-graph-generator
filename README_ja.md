@@ -36,7 +36,7 @@ CSVファイルからグラフ画像を自動生成する GitHub Action です�
 ```yaml
 steps:
   - name: Generate Graph from CSV
-    uses: asabon/csv-graph-generator@v0.0.1
+    uses: asabon/csv-graph-generator@v0
     with:
       csv-file: 'data/metrics.csv'
       output-file: 'report/graph.png'
