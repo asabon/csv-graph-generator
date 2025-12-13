@@ -35,7 +35,7 @@ CSVファイルからグラフ画像を自動生成する GitHub Action です�
 **レーダーチャート (Radar Chart)**
 <p><img src="assets/radar-chart-sample.png" width="400" alt="Radar Chart Sample"></p>
 
-**鶏頭図 (Polar Area Chart)**
+**ポーラーエリアチャート (Polar Area Chart)**
 <p><img src="assets/polar-area-chart-sample.png" width="400" alt="Polar Area Chart Sample"></p>
 
 ## 使い方
