@@ -40,6 +40,10 @@ jobs:
           graph-type: 'pie'
           title: 'Monthly Metrics (Pie)'
 
+      - name: Fix Permissions
+        if: always()
+        run: sudo chown -R $USER:$GROUPS assets/
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
