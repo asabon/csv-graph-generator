@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { promises as fs } from 'fs';
 import { parse } from 'csv-parse/sync';
+import * as path from 'path';
 
 async function run(): Promise<void> {
     try {
@@ -100,6 +101,10 @@ async function run(): Promise<void> {
         // Generate Image
         core.info(`Generating ${graphType} chart...`);
         const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
+
+        // Ensure directory exists
+        const dir = path.dirname(outputPath);
+        await fs.mkdir(dir, { recursive: true });
 
         // Write to file
         await fs.writeFile(outputPath, imageBuffer);
