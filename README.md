@@ -37,7 +37,7 @@ Add the following step to your workflow configuration file (e.g., `.github/workf
 ```yaml
 steps:
   - name: Generate Graph from CSV
-    uses: asabon/csv-graph-generator@v1
+    uses: asabon/csv-graph-generator@v0.0.1
     with:
       csv-file: 'data/metrics.csv'
       output-file: 'report/graph.png'
