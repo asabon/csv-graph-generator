@@ -42,6 +42,32 @@ async function run(): Promise<void> {
         const height = 600;
         const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, backgroundColour: 'white' });
 
+        // Generate colors for Pie/Doughnut charts
+        const backgroundColors = [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
+        ];
+        const borderColors = [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ];
+
+        let bg: string | string[] = 'rgba(54, 162, 235, 0.5)';
+        let bd: string | string[] = 'rgba(54, 162, 235, 1)';
+
+        if (graphType === 'pie' || graphType === 'doughnut') {
+            bg = dataPoints.map((_: any, index: number) => backgroundColors[index % backgroundColors.length]);
+            bd = dataPoints.map((_: any, index: number) => borderColors[index % borderColors.length]);
+        }
+
         const configuration: any = {
             type: graphType,
             data: {
@@ -50,8 +76,8 @@ async function run(): Promise<void> {
                     {
                         label: title || 'Data',
                         data: dataPoints,
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: bg,
+                        borderColor: bd,
                         borderWidth: 1,
                     },
                 ],
@@ -61,6 +87,9 @@ async function run(): Promise<void> {
                     title: {
                         display: !!title,
                         text: title
+                    },
+                    legend: {
+                        display: true
                     }
                 }
             },
