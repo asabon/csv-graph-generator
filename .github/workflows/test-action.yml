@@ -38,11 +38,44 @@ jobs:
           graph-type: 'pie'
           title: 'Monthly Sales (Pie)'
 
+      - name: Generate Doughnut Chart
+        id: doughnut-chart
+        uses: ./
+        with:
+          csv-file: '.github/test-data/sample.csv'
+          output-file: 'doughnut-chart.png'
+          graph-type: 'doughnut'
+          title: 'Monthly Sales (Doughnut)'
+
+      - name: Generate Radar Chart
+        id: radar-chart
+        uses: ./
+        with:
+          csv-file: '.github/test-data/sample.csv'
+          output-file: 'radar-chart.png'
+          graph-type: 'radar'
+          title: 'Monthly Sales (Radar)'
+
+      - name: Generate Polar Area Chart
+        id: polar-area-chart
+        uses: ./
+        with:
+          csv-file: '.github/test-data/sample.csv'
+          output-file: 'polar-area-chart.png'
+          graph-type: 'polarArea'
+          title: 'Monthly Sales (Polar Area)'
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: generated-graphs
           path: |
+            # bar/line are already there, just need to make sure I don't delete them if they are above.
+            # The replacement target includes 'bar-chart.png' etc in the 'target content' if I cover them.
+            # The user provided lines 32-48. I will replace that block.
             bar-chart.png
             line-chart.png
             pie-chart.png
+            doughnut-chart.png
+            radar-chart.png
+            polar-area-chart.png
