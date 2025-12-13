@@ -49,7 +49,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Update sample images
-          title: '此处: Update Sample Images'
+          title: 'Update Sample Images'
           body: |
             Auto-generated sample graph images update.
             Triggered by commit: ${{ github.sha }}
