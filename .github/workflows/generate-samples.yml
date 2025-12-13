@@ -1,0 +1,53 @@
+name: Generate Samples
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  generate-samples:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Generate Bar Chart Sample
+        uses: ./
+        with:
+          csv-file: '.github/sample-data/monthly_metrics.csv'
+          output-file: 'assets/bar-chart-sample.png'
+          graph-type: 'bar'
+          title: 'Monthly Metrics (Bar)'
+
+      - name: Generate Line Chart Sample
+        uses: ./
+        with:
+          csv-file: '.github/sample-data/monthly_metrics.csv'
+          output-file: 'assets/line-chart-sample.png'
+          graph-type: 'line'
+          title: 'Monthly Metrics (Line)'
+
+      - name: Generate Pie Chart Sample
+        uses: ./
+        with:
+          csv-file: '.github/sample-data/monthly_metrics.csv'
+          output-file: 'assets/pie-chart-sample.png'
+          graph-type: 'pie'
+          title: 'Monthly Metrics (Pie)'
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/
+          # Check for changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update sample images [skip ci]"
+            git push
+          fi

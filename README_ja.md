@@ -16,6 +16,19 @@ CSVファイルからグラフ画像を自動生成する GitHub Action です�
 *   **カスタマイズ可能**: 出力ファイルパス、グラフの種類、タイトルなどを設定できます。
 *   **簡単な統合**: 任意の GitHub Actions ワークフローに簡単に追加できます。
 
+### 出力サンプル
+
+このアクションで生成されたグラフの例です：
+
+**棒グラフ (Bar Chart)**
+![Bar Chart Sample](assets/bar-chart-sample.png)
+
+**折れ線グラフ (Line Chart)**
+![Line Chart Sample](assets/line-chart-sample.png)
+
+**円グラフ (Pie Chart)**
+![Pie Chart Sample](assets/pie-chart-sample.png)
+
 ## 使い方
 
 ワークフロー設定ファイル（例: `.github/workflows/generate-graph.yml`）に以下のステップを追加してください。
