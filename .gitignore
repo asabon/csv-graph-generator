@@ -8,4 +8,4 @@ coverage/
 .agent/config.yml
 .work
 
-!assets/
+!assets/*.png
