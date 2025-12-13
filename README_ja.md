@@ -29,6 +29,15 @@ CSVファイルからグラフ画像を自動生成する GitHub Action です�
 **円グラフ (Pie Chart)**
 <p><img src="assets/pie-chart-sample.png" width="400" alt="Pie Chart Sample"></p>
 
+**ドーナツグラフ (Doughnut Chart)**
+<p><img src="assets/doughnut-chart-sample.png" width="400" alt="Doughnut Chart Sample"></p>
+
+**レーダーチャート (Radar Chart)**
+<p><img src="assets/radar-chart-sample.png" width="400" alt="Radar Chart Sample"></p>
+
+**鶏頭図 (Polar Area Chart)**
+<p><img src="assets/polar-area-chart-sample.png" width="400" alt="Polar Area Chart Sample"></p>
+
 ## 使い方
 
 ワークフロー設定ファイル（例: `.github/workflows/generate-graph.yml`）に以下のステップを追加してください。
@@ -50,7 +59,7 @@ steps:
 | :--- | :--- | :---: | :--- |
 | `csv-file` | 入力CSVファイルのパス。 | **はい** | N/A |
 | `output-file` | 出力画像の保存先パス。 | **はい** | `graph.png` |
-| `graph-type` | 生成するグラフの種類 (`bar`, `line`, `pie` など)。 | いいえ | `bar` |
+| `graph-type` | 生成するグラフの種類 (`bar`, `line`, `pie`, `doughnut`, `radar`, `polarArea`)。 | いいえ | `bar` |
 | `title` | 表示するグラフのタイトル。 | いいえ | `''` |
 
 ### CSVフォーマット例
