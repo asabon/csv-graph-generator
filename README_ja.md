@@ -21,13 +21,13 @@ CSVファイルからグラフ画像を自動生成する GitHub Action です�
 このアクションで生成されたグラフの例です：
 
 **棒グラフ (Bar Chart)**
-<img src="assets/bar-chart-sample.png" width="400" alt="Bar Chart Sample">
+<p><img src="assets/bar-chart-sample.png" width="400" alt="Bar Chart Sample"></p>
 
 **折れ線グラフ (Line Chart)**
-<img src="assets/line-chart-sample.png" width="400" alt="Line Chart Sample">
+<p><img src="assets/line-chart-sample.png" width="400" alt="Line Chart Sample"></p>
 
 **円グラフ (Pie Chart)**
-<img src="assets/pie-chart-sample.png" width="400" alt="Pie Chart Sample">
+<p><img src="assets/pie-chart-sample.png" width="400" alt="Pie Chart Sample"></p>
 
 ## 使い方
 
