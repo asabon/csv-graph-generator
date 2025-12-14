@@ -18,7 +18,7 @@ inputs:
     required: false
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/asabon/csv-graph-generator:v0'
+  image: "Dockerfile"
   # image: 'Dockerfile'
 
 branding:
