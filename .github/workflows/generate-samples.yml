@@ -81,6 +81,10 @@ jobs:
           name: generated-graphs
           path: assets/*.png
 
+      - name: Revert action.yml changes
+        if: always()
+        run: git checkout action.yml
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
