@@ -34,6 +34,7 @@ jobs:
             type=semver,pattern={{major}}
           flavor: |
             latest=false
+            prefix=v
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
