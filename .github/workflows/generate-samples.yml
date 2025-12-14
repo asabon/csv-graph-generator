@@ -16,6 +16,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Force Dockerfile build (for sample generation)
+        # This step modifies action.yml to point to 'Dockerfile' instead of the pre-built GHCR image.
+        # This ensures that the generated sample images reflect the latest code changes.
+        run: |
+          sed -i 's|image: .docker://.*|image: "Dockerfile"|' action.yml
+
       - name: Generate Bar Chart Sample
         uses: ./
         with:
