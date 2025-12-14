@@ -16,63 +16,53 @@ CSVファイルからグラフ画像を自動生成する GitHub Action です�
 *   **カスタマイズ可能**: 出力ファイルパス、グラフの種類、タイトルなどを設定できます。
 *   **簡単な統合**: 任意の GitHub Actions ワークフローに簡単に追加できます。
 
-### 出力サンプル
-
-このアクションで生成されたグラフの例です：
-
-**棒グラフ (Bar Chart)**
-<p><img src="assets/bar-chart-sample.png" width="400" alt="Bar Chart Sample"></p>
-
-**折れ線グラフ (Line Chart)**
-<p><img src="assets/line-chart-sample.png" width="400" alt="Line Chart Sample"></p>
-
-**円グラフ (Pie Chart)**
-<p><img src="assets/pie-chart-sample.png" width="400" alt="Pie Chart Sample"></p>
-
-**ドーナツグラフ (Doughnut Chart)**
-<p><img src="assets/doughnut-chart-sample.png" width="400" alt="Doughnut Chart Sample"></p>
-
-**レーダーチャート (Radar Chart)**
-<p><img src="assets/radar-chart-sample.png" width="400" alt="Radar Chart Sample"></p>
-
-**ポーラーエリアチャート (Polar Area Chart)**
-<p><img src="assets/polar-area-chart-sample.png" width="400" alt="Polar Area Chart Sample"></p>
-
-## 使い方
-
-ワークフロー設定ファイル（例: `.github/workflows/generate-graph.yml`）に以下のステップを追加してください。
-
-```yaml
-steps:
-  - name: Generate Graph from CSV
-    uses: asabon/csv-graph-generator@v0
-    with:
-      csv-file: 'data/metrics.csv'
-      output-file: 'report/graph.png'
-      graph-type: 'bar'
-      title: 'Monthly Metrics'
-```
-
-### 入力パラメータ
-
-| 入力名 | 説明 | 必須 | デフォルト値 |
-| :--- | :--- | :---: | :--- |
-| `csv-file` | 入力CSVファイルのパス。 | **はい** | N/A |
-| `output-file` | 出力画像の保存先パス。 | **はい** | `graph.png` |
-| `graph-type` | 生成するグラフの種類 (`bar`, `line`, `pie`, `doughnut`, `radar`, `polarArea`)。 | いいえ | `bar` |
-| `title` | 表示するグラフのタイトル。 | いいえ | `''` |
-
-### CSVフォーマット例
-
-このアクションは、1行目がヘッダーである単純なCSVフォーマットを想定しています。デフォルトでは、**1列目がラベル（X軸）**、**2列目がデータ値（Y軸）** として使用されます。
-
+## 実行例
+ 
+入力された CSV データがどのようにグラフ画像に変換されるかを示します。
+ 
+### 入力データ (CSV)
+ 
+このアクションは、1行目がヘッダーである単純な CSV フォーマットを想定しています。デフォルトでは、**1列目がラベル（X軸）**、**2列目がデータ値（Y軸）** として使用されます。
+ 
 ```csv
 Label,Value
-January,10
-February,20
-March,15
-April,25
+January,25
+February,40
+March,35
+April,50
+May,45
+June,60
+July,55
+August,70
+September,65
+October,80
+November,75
+December,90
 ```
+ 
+### 生成されるグラフ
+ 
+上記のデータ構造から生成されるグラフの例です：
+ 
+**棒グラフ (Bar Chart)**
+<p><img src="assets/bar-chart-sample.png" width="400" alt="Bar Chart Sample"></p>
+ 
+**折れ線グラフ (Line Chart)**
+<p><img src="assets/line-chart-sample.png" width="400" alt="Line Chart Sample"></p>
+ 
+**円グラフ (Pie Chart)**
+<p><img src="assets/pie-chart-sample.png" width="400" alt="Pie Chart Sample"></p>
+ 
+**ドーナツグラフ (Doughnut Chart)**
+<p><img src="assets/doughnut-chart-sample.png" width="400" alt="Doughnut Chart Sample"></p>
+ 
+**レーダーチャート (Radar Chart)**
+<p><img src="assets/radar-chart-sample.png" width="400" alt="Radar Chart Sample"></p>
+ 
+**ポーラーエリアチャート (Polar Area Chart)**
+<p><img src="assets/polar-area-chart-sample.png" width="400" alt="Polar Area Chart Sample"></p>
+ 
+## 使い方
 
 ## 貢献について
 
