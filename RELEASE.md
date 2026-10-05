@@ -1,67 +1,62 @@
 # リリース手順 (Release Process)
 
-このドキュメントでは、このプロジェクトのリリース手順について説明します。
-リリース作業の多くは GitHub Actions によって自動化されており、開発者は日常的な PR マージとリリース時のボタン操作のみで管理できます。
+本プロジェクトのバージョンリリース手順です。
+日常の開発はトピックブランチと PR で進め、リリース作業は Antigravity の `prepare-release` スキルを活用して迅速に行うことができます。
 
-## 概要
+---
 
-以下の自動化が導入されています：
-1.  **リリースノートのドラフト自動生成** (Release Drafter): PR マージ時に下書きを更新。
-2.  **バージョン情報の自動更新** (Bump Version): リリース前に `package.json` や `README` のバージョンを更新。
-3.  **メジャーバージョンタグの自動更新**: リリース公開時に、メジャーバージョンタグ（例: `v1`）を最新へ更新。
+## ⚡ クイックリリース手順（推奨: Antigravity を使用）
 
-## 1. 普段の開発 (Daily Development)
+日常のリリースは、チャットで Antigravity に指示するだけで自動で準備が完了します。
 
-機能追加やバグ修正を行う際は、以下の手順で行います。
-（**注意**: ここで `package.json` のバージョンを手動で上げる必要はありません）
+1. **リリース準備を依頼**:
+   - チャットで **「リリースしてください」**（パッチバージョンアップ）または **「vX.Y.Z をリリースしてください」** と伝えます。
+   - Antigravity が `main` の CI 疎通を確認し、リリース用トピックブランチ（`chore/<連番>-release-vX.Y.Z`）の作成、`package.json` の更新、Issue 起票、PR 作成までを自動実行します。
+2. **PR の確認・マージ**:
+   - 発行された PR を確認し、`main` へマージします。
+3. **リリースの公開**:
+   - リポジトリの **[Releases](https://github.com/asabon/csv-graph-generator/releases)** ページを開きます。
+   - 自動生成されている **Next Release (Draft)** の編集アイコンをクリックし、Tag version（例: `v0.0.6`）とタイトルを入力して **Publish release** をクリックします（または `git tag vX.Y.Z && git push origin vX.Y.Z`）。
 
-1.  ブランチを作成し、変更を行います。
-2.  Pull Request (PR) を作成します。
-3.  **【重要】 PR のタイトルは「変更内容がひと目でわかる」ように記述してください**。
-    *   このタイトルがそのままリリースノートの各項目として使用されます。
-    *   良い例: `CSV読み込みエラー時のメッセージを改善`
-    *   悪い例: `修正`, `update`
-4.  **【重要】 PR に適切なラベルを付与してください**。これによりリリースノートのカテゴリが自動分類されます。
-    *   `feature` または `enhancement`: 新機能（"🚀 Features" セクション）
-    *   `fix` または `bug`: バグ修正（"🐛 Bug Fixes" セクション）
-    *   `chore`, `documentation`, `maintenance`: その他（"🧰 Maintenance" セクション）
-5.  PR をマージします。
+---
 
-## 2. リリース準備 (Release Preparation)
+## 🛠️ 手動リリース手順 (Manual Process)
 
-リリースするコードが `main` ブランチに揃ったら、バージョン番号を更新します。
+手動でリリース作業を行う場合の手順です。
 
-1.  GitHub の [Actions] タブを開きます。
-2.  左側のワークフロー一覧から **Bump Version** を選択します。
-3.  右側の **Run workflow** ボタンをクリックします。
-4.  **Version** 入力欄は、**基本的には空欄のままでOKです**。
-    *   空欄の場合、現在作成されている「Draft Release」のタイトル（例: `v1.0.2`）からバージョンを自動取得します。
-    *   もし手動で指定したい場合のみ、バージョンを入力してください（例: `1.0.0`）。
-    *   **【注意】メジャーバージョンアップ（例: v0 -> v1）の場合**:
-        *   `action.yml` を手動で修正する必要があります。
-        *   `image: 'docker://ghcr.io/asabon/csv-graph-generator:vX'` の部分を新しいメジャーバージョンに書き換えてからコミットしてください。
-5.  **Run workflow** (緑色のボタン) をクリックします。
+### 1. リリース準備ブランチの作成とバージョン更新
+1. `main` ブランチを最新化します。
+   ```bash
+   git switch main
+   git pull origin main
+   ```
+2. リリース用ブランチを作成します。
+   ```bash
+   git switch -c chore/<3桁連番>-release-vX.Y.Z
+   ```
+3. `package.json` の `version` を更新します。
+   - ※ メジャーバージョンアップ（例: `v0` -> `v1`）の場合は、`action.yml` の `image: 'docker://ghcr.io/asabon/csv-graph-generator:vX'` および `README.md` の `@vX` 表記も更新します。
+4. Issue ファイル（`docs/issues/<3桁連番>-release-vX.Y.Z.md`）を作成します。
+5. コミットしてリモートへプッシュし、PR を作成します。
+   ```bash
+   git add package.json docs/issues/<3桁連番>-release-vX.Y.Z.md
+   git commit -m "chore: リリース vX.Y.Z に向けたバージョン更新"
+   git push -u origin chore/<3桁連番>-release-vX.Y.Z
+   gh pr create --title "[Chore] Issue #<3桁連番>: リリース vX.Y.Z" --label "chore" --base main
+   ```
 
-自動的に以下の処理が行われます：
-*   `package.json` のバージョンが更新されます。
-*   もしメジャーバージョンが変わった場合（例: `0.x` -> `1.x`）、`README` 内の `@v0` 表記が `@v1` に書き換えられます。
-*   **Pull Request (PR) が作成されます**（ブランチ保護ルールを遵守するため）。
+### 2. PR のレビューとマージ
+- CI（`Test Action`）の通過を確認し、PR を `main` へマージします。
 
-**6. 作成された PR を確認し、マージします。**
-これをマージとすることで `main` ブランチのバージョン更新が完了します。
-このマージが完了してから、次の「リリース公開」の手順に進んでください。
+### 3. リリース公開 (Publish Release)
+1. **[Releases](https://github.com/asabon/csv-graph-generator/releases)** ページを開きます。
+2. 一番上の **Next Release (Draft)** を開き、右上の鉛筆アイコン（Edit）をクリックします。
+3. **Tag version** に更新したバージョン（先頭に `v` を付与、例: `v0.0.6`）を入力し、「Create new tag」を選択します。
+4. タイトルもバージョン番号（例: `v0.0.6`）に変更し、**Publish release** をクリックします。
 
-## 3. リリース公開 (Publish Release)
+---
 
-1.  リポジトリの **[Releases](https://github.com/asabon/csv-graph-generator/releases)** ページを開きます。
-2.  一覧の一番上に自動生成された **Update-vX.X.X (Draft)** というドラフトがあるので、右側の鉛筆アイコン（Edit）をクリックします。
-3.  **Tag version** 欄に、先ほど Bump Version で指定したバージョン番号を入力します（例: `v1.0.0`）。
-    *   **【重要】** 必ず Bump Version で指定した数値と同じバージョン（先頭に `v` を付与）を指定してください。これが食い違うと、コード内のバージョン表記とタグが一致しなくなります。
-    *   タイトル（Release title）もバージョン番号などに変更してください。
-4.  内容を確認し、**Publish release** ボタンをクリックします。
-
-### 公開後の自動処理
-
-リリースが公開されると、以下の処理が自動的に実行されます：
-*   指定したバージョン（例: `v1.0.0`）のタグが作成されます。
-*   **Update Major Tag** ワークフローが動き、メジャーバージョンタグ（例: `v1`）が強制的にこの新しいリリースを指すように更新されます。
+## 🤖 公開後の自動処理
+リリースが公開されると、以下の GitHub Actions が自動実行されます：
+- **Publish Docker Image**: GHCR に最新の Docker イメージをビルド・プッシュします。
+- **Update Major Tag**: メジャーバージョンタグ（例: `v0`）を自動的にこの新しいリリースへ更新します。

@@ -4,39 +4,45 @@
 
 Thank you for your interest in contributing to CSV Graph Generator! We welcome bug reports, feature requests, and pull requests.
 
+---
+
 ## Development Workflow
 
-This project uses a specific workflow for building the TypeScript action, designed to handle dependencies that require native compilation (like `canvas`).
+This project operates as a **Docker-based GitHub Action**.
+Because dependencies like `canvas` require native compilation, integration testing and graph generation verification are handled via GitHub Actions CI (Ubuntu / Docker).
 
-### Important: Do Not Build Locally
+### 1. Development & Branching Strategy (GitHub Flow)
+1. **Open an Issue**:
+   - Before starting, create an issue under [`docs/issues/`](docs/issues/) using the template [`docs/issues/TEMPLATE.md`](docs/issues/TEMPLATE.md).
+2. **Create a Topic Branch**:
+   - Create a branch named `<type>/<3-digit-id>-<summary>` (e.g., `feature/002-line-chart-options`).
+   - Allowed types: `feature`, `fix`, `refactor`, `docs`, `chore`, `test`.
+3. **Make Changes**:
+   - Edit the TypeScript source code under `src/`.
+4. **Commit & Push**:
+   - Commit changes in small, logical units and push to your topic branch.
+   - Note: Direct commits and direct pushes to `main` are blocked by Git Hooks.
+5. **Create a Pull Request**:
+   - Once a PR is opened, the GitHub Actions CI (`Test Action`) automatically builds the Dockerfile on Ubuntu and validates graph generation.
+   - You do NOT need to build or commit `dist/` artifacts manually.
 
-Since `canvas` dependencies can be difficult to set up on some environments (especially Windows), **we do not require or recommend building the project locally.**
+---
 
-Instead, we have a CI workflow setup that automatically builds the project and commits the artifacts (`dist/` folder) whenever you push changes to a feature branch.
+## Code Style & Quality
 
-1.  **Create a Branch**: Create a new branch for your feature or fix (e.g., `feature/add-pie-chart`).
-2.  **Make Changes**: Edit the TypeScript source code in `src/`.
-3.  **Push**: Commit and push your changes to GitHub.
-    ```bash
-    git push origin feature/add-pie-chart
-    ```
-4.  **Auto-Build**: The GitHub Actions workflow will automatically run, install dependencies, build the project, and commit the generated `dist/index.js` back to your branch.
-5.  **Pull**: Pull the changes (including the built artifacts) back to your local machine before making further edits.
-    ```bash
-    git pull origin feature/add-pie-chart
-    ```
+- We use **Prettier** for code formatting (`npm run format` / `npm run format-check`).
+- We use **ESLint** for linting (`npm run lint`).
+- We use **Jest** for unit testing (`npm test`).
+- Ensure your changes pass format and lint checks before submitting a PR.
 
-### Release Process
+---
 
-1.  Update the version in `package.json`.
-2.  Create a new Release on GitHub.
-3.  Publish to the GitHub Marketplace (automatic upon valid release).
+## Release Process
 
-## Code Style
+For the full release procedure, see [`RELEASE.md`](RELEASE.md).
+Releases can be prepared smoothly using Antigravity's `prepare-release` skill.
 
-*   We use **Prettier** for code formatting.
-*   We use **ESLint** for linting.
-*   Please ensure your code follows these standards. The CI workflow will also check for format and lint errors.
+---
 
 ## Reporting Issues
 
