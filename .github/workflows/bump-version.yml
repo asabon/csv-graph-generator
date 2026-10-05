@@ -41,22 +41,20 @@ jobs:
             echo "Using input version: $INPUT_VERSION"
             echo "final_version=$INPUT_VERSION" >> $GITHUB_OUTPUT
           else
-            echo "No input version provided. Fetching latest draft release..."
-            # Get the latest draft release tag_name
-            DRAFT_VERSION=$(gh release list --limit 1 --exclude-drafts=false --json tagName,isDraft --jq '.[] | select(.isDraft) | .tagName')
+            echo "No input version provided. Checking for draft release or auto-bumping package.json..."
+            # Check if there is a draft release with an assigned tag
+            DRAFT_VERSION=$(gh release list --limit 1 --exclude-drafts=false --json tagName,isDraft --jq '.[] | select(.isDraft) | .tagName' 2>/dev/null || true)
             
-            # If no draft found or tagName is empty, try extracting from name-template equivalent if needed, but standard release-drafter uses tagName.
-            # Assuming release-drafter has run and set a tag like v1.0.2
-            
-            if [ -z "$DRAFT_VERSION" ]; then
-              echo "Error: No draft release found to auto-detect version from."
-              exit 1
+            if [ -n "$DRAFT_VERSION" ] && [ "$DRAFT_VERSION" != "null" ]; then
+              CLEAN_VERSION="${DRAFT_VERSION#v}"
+              echo "Detected tagged draft version: $DRAFT_VERSION (clean: $CLEAN_VERSION)"
+            else
+              CURRENT_PKG_VER=$(node -p "require('./package.json').version")
+              CLEAN_VERSION=$(npm version patch --no-git-tag-version | sed 's/^v//')
+              git checkout package.json
+              echo "No tag in draft release. Auto-bumping package.json from $CURRENT_PKG_VER to $CLEAN_VERSION"
             fi
             
-            # Remove 'v' prefix if present for npm version
-            CLEAN_VERSION="${DRAFT_VERSION#v}"
-            
-            echo "Detected draft version: $DRAFT_VERSION (clean: $CLEAN_VERSION)"
             echo "final_version=$CLEAN_VERSION" >> $GITHUB_OUTPUT
           fi
 

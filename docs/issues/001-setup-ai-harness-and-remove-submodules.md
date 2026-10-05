@@ -23,6 +23,7 @@
 - [x] `.github/pull_request_template.md` が整備されていること。
 - [x] `.gitignore` に一時ファイル等（`/scratch/` など）の除外設定が追加されていること。
 - [x] `docs/issues/` の Issue 駆動開発テンプレート（`TEMPLATE.md`）が整備されていること。
+- [x] Release Drafter を IntervalTimer 同様、単一の「Next Release」ドラフト更新方式および autolabeler 連携へと洗練すること。
 
 ---
 

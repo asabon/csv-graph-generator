@@ -25,12 +25,12 @@ description: >-
 本リポジトリでは **Bump Version** ワークフロー（自動 PR 生成）を活用するか、手動でリリース PR を作成します。
 
 #### 方法 A: Bump Version ワークフローの起動（推奨・自動化）
-1. 指定バージョンがある場合、または Draft Release から自動判定させる場合：
+1. バージョンを指定して更新するか、指定なしでパッチバージョンを自動インクリメント（例: 0.0.5 -> 0.0.6）させる場合：
    ```bash
-   # バージョン手動指定の場合（例: 0.0.6）
-   gh workflow run bump-version.yml -f version="0.0.6"
+   # バージョン手動指定の場合（例: 0.1.0）
+   gh workflow run bump-version.yml -f version="0.1.0"
 
-   # Draft Release から自動取得させる場合
+   # バージョン指定なし（package.json を patch bump）
    gh workflow run bump-version.yml
    ```
 2. ワークフロー完了後、自動生成された PR を確認：
@@ -69,11 +69,11 @@ description: >-
    git pull origin main
    ```
 2. リリースタグを発行、または GitHub Releases 画面で公開する：
-   - GitHub Releases 画面（`https://github.com/asabon/csv-graph-generator/releases`）の Draft Release を開き、Tag / Title を `vX.Y.Z` に設定して **Publish release** をクリックする。
+   - GitHub Releases 画面（`https://github.com/asabon/csv-graph-generator/releases`）の **Next Release (Draft)** を開き、Tag version（例: `v0.0.6`）を入力して新規タグ作成を選択し、Title を `v0.0.6` に設定して **Publish release** をクリックする。
    - またはタグを push してトリガーする：
      ```bash
-     git tag vX.Y.Z
-     git push origin vX.Y.Z
+     git tag v0.0.6
+     git push origin v0.0.6
      ```
 3. **公開後の自動処理**:
    - `publish-release.yml` および `publish-image.yml`（GHCR コンテナイメージ更新）が自動実行され、最新のメジャーバージョンタグ（例: `v0`）が追従更新されることを案内する。
