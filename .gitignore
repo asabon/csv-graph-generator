@@ -3,9 +3,8 @@ dist/
 lib/
 coverage/
 .DS_Store
+/scratch/
 *.jpg
 *.png
-.agent/config.yml
-.work
 
 !assets/*.png
