@@ -24,6 +24,7 @@
 - [x] `.gitignore` に一時ファイル等（`/scratch/` など）の除外設定が追加されていること。
 - [x] `docs/issues/` の Issue 駆動開発テンプレート（`TEMPLATE.md`）が整備されていること。
 - [x] Release Drafter を IntervalTimer 同様、単一の「Next Release」ドラフト更新方式および autolabeler 連携へと洗練すること。
+- [x] bump-version ワークフローおよび不要な ncc 依存関係・スクリプトを削除し、CONTRIBUTING ドキュメントを実態に合わせて更新すること。
 
 ---
 
