@@ -31,13 +31,14 @@
    git switch main
    git pull origin main
    ```
-2. リリース用ブランチを作成します。
+2. リリース用の Issue を起票します。
+   - `docs/issues/` 配下の一覧を確認して3桁連番を決定し、`docs/issues/TEMPLATE.md` をもとに `docs/issues/<3桁連番>-release-vX.Y.Z.md` を作成します。
+3. リリース用トピックブランチを作成・切り替えます。
    ```bash
    git switch -c chore/<3桁連番>-release-vX.Y.Z
    ```
-3. `package.json` の `version` を更新します。
-   - ※ メジャーバージョンアップ（例: `v0` -> `v1`）の場合は、`action.yml` の `image: 'docker://ghcr.io/asabon/csv-graph-generator:vX'` および `README.md` の `@vX` 表記も更新します。
-4. Issue ファイル（`docs/issues/<3桁連番>-release-vX.Y.Z.md`）を作成します。
+4. `package.json` の `version` を更新します。
+   - ※ メジャーバージョンアップ（例: `v0` -> `v1`）の場合は、`action.yml` の `image: 'docker://ghcr.io/asabon/csv-graph-generator:vX'` および `README.md`（および `README_ja.md`）の `@vX` 表記も更新します。
 5. コミットしてリモートへプッシュし、PR を作成します。
    ```bash
    # 通常（マイナー・パッチリリース時）

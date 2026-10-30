@@ -11,28 +11,33 @@ description: >-
 
 ## 手順
 
-1. **既存 Issue の確認と採番**
+1. **ベースブランチ (main) の最新化**
+   - 他の開発者やタスクによる最新の Issue 起票状況を取り込むため、`main` を最新化する。
+   ```bash
+   git switch main
+   git pull origin main
+   ```
+
+2. **既存 Issue の確認と採番**
    - `docs/issues/` 配下のファイル一覧を確認し、最大の3桁連番を特定して次の番号を決定する（例: `001` があれば次は `002`）。
    ```bash
    Get-ChildItem docs/issues/*.md
    ```
 
-2. **Issue ファイルの作成**
+3. **Issue ファイルの作成**
    - [`docs/issues/TEMPLATE.md`](../../../docs/issues/TEMPLATE.md) をコピーして `docs/issues/<3桁番号>-<概要>.md` を作成する。
    - タイトル、目的、受け入れ基準（Acceptance Criteria）、設計メモを記述する。
    - ステータスを `未着手`（または `進行中`）にする。
 
-3. **トピックブランチの作成と切り替え**
+4. **トピックブランチの作成と切り替え**
    - タイプを選定（`feature`, `fix`, `refactor`, `docs`, `chore`, `test`）。
-   - `main` ブランチが最新であることを確認した上で、ブランチを作成・切り替えする。
+   - ブランチを作成・切り替えする。
    ```bash
-   git switch main
-   git pull origin main
    git switch -c <タイプ>/<3桁番号>-<概要>
    ```
 
-4. **Issue ファイルのコミット**
-   - 作成した Issue ファイルをブランチの初期コミットとして追加する。
+5. **Issue ファイルのコミット**
+   - 採番が重複していないことを確認した上で、作成した Issue ファイルをブランチの初期コミットとして追加する。
    ```bash
    git add docs/issues/<3桁番号>-<概要>.md
    git commit -m "Issue #<3桁番号>: <タイトル> を起票"

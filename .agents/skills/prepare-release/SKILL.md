@@ -16,9 +16,12 @@ description: >-
 ### 1. ベースブランチ (main) の CI 疎通確認 & バージョン決定
 1. ベースとなる `main` ブランチの最新コミットに対する GitHub Actions (Test Action) の成功を確認する：
    ```bash
-   gh run list --branch main --workflow "Test Action" --limit 1
+   git fetch origin main
+   gh run list --branch main --workflow "Test Action" --limit 1 --json headSha,status,conclusion
+   git rev-parse origin/main
    ```
-   - ステータスが `completed / success` であることを確認する（失敗または実行中の場合は、結果を待つか原因を確認する）。
+   - 直近の実行の `headSha` が `origin/main` の最新コミット SHA と一致し、ステータスが `completed / success` であることを確認する。
+   - ※ まだ実行されていない、または過去のコミットに対する結果である場合は、`gh workflow run "Test Action" --ref main` を実行して完了を待つ。
 2. バージョン情報の決定：
    - ユーザーからバージョン（例: `"0.0.6"`）が指定された場合はそのバージョンを使用する。
    - バージョンが明示されていない場合は現在の `package.json` のバージョンを確認し、変更差分の規模に応じてパッチインクリメント（例: `0.0.5` -> `0.0.6`）を決定する。
