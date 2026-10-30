@@ -13,14 +13,15 @@ description: >-
 
 ## 🎯 リリース準備フロー (Release Preparation)
 
-### 1. ベースブランチ (main) の CI 疎通確認 & バージョン決定
-1. ベースとなる `main` ブランチの最新コミットに対する GitHub Actions (Test Action) の成功を確認する：
+### 1. ベースブランチ (main) の最新化と CI 疎通確認 & バージョン決定
+1. ベースとなる `main` ブランチを最新化し、その最新コミットに対する GitHub Actions (Test Action) の成功を確認する：
    ```bash
-   git fetch origin main
+   git switch main
+   git pull origin main
    gh run list --branch main --workflow "Test Action" --limit 1 --json headSha,status,conclusion
-   git rev-parse origin/main
+   git rev-parse HEAD
    ```
-   - 直近の実行の `headSha` が `origin/main` の最新コミット SHA と一致し、ステータスが `completed / success` であることを確認する。
+   - 直近の実行の `headSha` が最新化したローカル `HEAD` のコミット SHA と一致し、ステータスが `completed / success` であることを確認する。
    - ※ まだ実行されていない、または過去のコミットに対する結果である場合は、`gh workflow run "Test Action" --ref main` を実行して完了を待つ。
 2. バージョン情報の決定：
    - ユーザーからバージョン（例: `"0.0.6"`）が指定された場合はそのバージョンを使用する。
@@ -36,8 +37,6 @@ description: >-
 ### 3. トピックブランチ作成 & バージョン更新
 1. トピックブランチ `chore/<3桁連番>-release-vX.Y.Z` を作成・切り替える：
    ```bash
-   git switch main
-   git pull origin main
    git switch -c chore/<3桁連番>-release-vX.Y.Z
    ```
 2. `package.json` のバージョンを更新：
