@@ -23,7 +23,14 @@ description: >-
    - ユーザーからバージョン（例: `"0.0.6"`）が指定された場合はそのバージョンを使用する。
    - バージョンが明示されていない場合は現在の `package.json` のバージョンを確認し、変更差分の規模に応じてパッチインクリメント（例: `0.0.5` -> `0.0.6`）を決定する。
 
-### 2. トピックブランチ作成 & バージョン更新
+### 2. リリース用 Issue の起票
+1. `docs/issues/` 配下のファイル一覧を確認し、3桁連番を決定する：
+   ```bash
+   Get-ChildItem docs/issues/*.md
+   ```
+2. [`docs/issues/TEMPLATE.md`](../../../docs/issues/TEMPLATE.md) をもとに `docs/issues/<3桁連番>-release-vX.Y.Z.md` を作成する（リリース目的と受け入れ基準を記述）。
+
+### 3. トピックブランチ作成 & バージョン更新
 1. トピックブランチ `chore/<3桁連番>-release-vX.Y.Z` を作成・切り替える：
    ```bash
    git switch main
@@ -31,15 +38,19 @@ description: >-
    git switch -c chore/<3桁連番>-release-vX.Y.Z
    ```
 2. `package.json` のバージョンを更新：
-   - メジャーバージョンアップ時は `action.yml` や `README.md` の `@vX` 表記も更新する。
-3. リリース用の Issue を `docs/issues/<3桁連番>-release-vX.Y.Z.md` として作成する。
-4. 変更をコミットする：
+   - メジャーバージョンアップ時は `action.yml` や `README.md`（および `README_ja.md`）の `@vX` 表記も更新する。
+3. 変更をコミットする：
    ```bash
+   # 通常（マイナー・パッチリリース時）
    git add package.json docs/issues/<3桁連番>-release-vX.Y.Z.md
+   git commit -m "chore: リリース vX.Y.Z に向けたバージョン更新"
+
+   # メジャーバージョンアップ時（action.yml, README等も更新した場合）
+   git add package.json docs/issues/<3桁連番>-release-vX.Y.Z.md action.yml README.md README_ja.md
    git commit -m "chore: リリース vX.Y.Z に向けたバージョン更新"
    ```
 
-### 3. Pull Request の作成
+### 4. Pull Request の作成
 1. ブランチをリモートへプッシュする：
    ```bash
    git push -u origin chore/<3桁連番>-release-vX.Y.Z
@@ -61,12 +72,9 @@ description: >-
    git switch main
    git pull origin main
    ```
-2. リリースタグを発行、または GitHub Releases 画面で公開する：
-   - GitHub Releases 画面（`https://github.com/asabon/csv-graph-generator/releases`）の **Next Release (Draft)** を開き、Tag version（例: `v0.0.6`）を入力して新規タグ作成を選択し、Title を `v0.0.6` に設定して **Publish release** をクリックする。
-   - またはタグを push してトリガーする：
-     ```bash
-     git tag vX.Y.Z
-     git push origin vX.Y.Z
-     ```
+2. GitHub Releases 画面でドラフトを公開する：
+   - GitHub Releases 画面（`https://github.com/asabon/csv-graph-generator/releases`）の **Next Release (Draft)** を開き、右上の編集（鉛筆アイコン）をクリックする。
+   - **Tag version**（例: `v0.0.6`）を入力して「Create new tag」を選択し、Title を `v0.0.6` に設定して **Publish release** をクリックする。
+   - ※ UI 経由でドラフトを公開することで、Release Drafter で自動生成されたリリースノートが添付され、Docker イメージビルドおよびメジャーバージョンタグ更新ワークフローが確実にトリガーされます。
 3. **公開後の自動処理**:
    - `publish-release.yml`（メジャーバージョンタグ更新）および `publish-image.yml`（GHCR コンテナイメージ更新）が自動実行されることをユーザーに報告する。

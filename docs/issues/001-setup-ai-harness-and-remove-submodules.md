@@ -42,7 +42,7 @@
      - `create-issue`: `docs/issues/` の連番自動採番、テンプレート展開、ブランチ自動作成
      - `create-pr`: `gh pr create` + PR テンプレート適用
      - `check-ci`: `gh run` 活用（サマリー、Annotations、失敗ステップログ抽出）
-     - `prepare-release`: GitHub Actions (Bump Version ワークフロー起動や package.json バージョン更新) に連動したリリース準備
+     - `prepare-release`: バージョン更新、Issue 起票、PR 作成、およびリリース公開手順のガイド
    - `.githooks/`:
      - `pre-commit`: main 直接コミット禁止、ブランチ名規則チェック
      - `pre-push`: main 直接プッシュ禁止
@@ -54,6 +54,6 @@
 
 ## 📝 完了チェックリスト
 
-- [ ] 受け入れ基準を満たす実装・設定完了
-- [ ] フォーマット・リントチェック確認
-- [ ] Issue のステータスを完了に更新
+- [x] 受け入れ基準を満たす実装・設定完了
+- [x] フォーマット・リントチェック確認
+- [x] Issue のステータスを完了に更新

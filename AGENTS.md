@@ -50,7 +50,7 @@
 
 - **Git Hooks による誤操作防止**:
   - 本リポジトリでは `.githooks/` 配下に `pre-commit` および `pre-push` を用意し、`main` への直接操作をブロックする。
-  - 初期設定コマンド: `git config core.hooksPath .githooks`
+  - 初期設定コマンド: `git config core.hooksPath .githooks`（Linux/macOS 環境では `chmod +x .githooks/*` による実行権限付与を推奨）
 - **プルリクエスト (PR) 運用**:
   - 作業完了後は GitHub 上で Pull Request を作成し、レビュー・CI 検証を経て `main` へマージする。
   - PR 作成時は [`.github/pull_request_template.md`](.github/pull_request_template.md) のフォーマットを適用し、タイトルは `[種別] 概要` とする（種別は `[Feature]`, `[Fix]`, `[Refactor]`, `[Docs]`, `[Chore]`, `[Test]`）。

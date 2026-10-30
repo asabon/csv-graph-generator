@@ -16,7 +16,8 @@
    - 発行された PR を確認し、`main` へマージします。
 3. **リリースの公開**:
    - リポジトリの **[Releases](https://github.com/asabon/csv-graph-generator/releases)** ページを開きます。
-   - 自動生成されている **Next Release (Draft)** の編集アイコンをクリックし、Tag version（例: `v0.0.6`）とタイトルを入力して **Publish release** をクリックします（または `git tag vX.Y.Z && git push origin vX.Y.Z`）。
+   - 自動生成されている **Next Release (Draft)** の編集アイコンをクリックし、Tag version（例: `v0.0.6`）とタイトルを入力して **Publish release** をクリックします。
+     - ※ リリースノートが確実に付与され、後続のコンテナイメージビルドやメジャーバージョンタグ更新が正しく実行されるよう、GitHub UI からのドラフト公開を推奨します。
 
 ---
 
@@ -39,8 +40,14 @@
 4. Issue ファイル（`docs/issues/<3桁連番>-release-vX.Y.Z.md`）を作成します。
 5. コミットしてリモートへプッシュし、PR を作成します。
    ```bash
+   # 通常（マイナー・パッチリリース時）
    git add package.json docs/issues/<3桁連番>-release-vX.Y.Z.md
    git commit -m "chore: リリース vX.Y.Z に向けたバージョン更新"
+
+   # メジャーバージョンアップ時（action.yml, README等も更新した場合）
+   git add package.json docs/issues/<3桁連番>-release-vX.Y.Z.md action.yml README.md README_ja.md
+   git commit -m "chore: リリース vX.Y.Z に向けたバージョン更新"
+
    git push -u origin chore/<3桁連番>-release-vX.Y.Z
    gh pr create --title "[Chore] Issue #<3桁連番>: リリース vX.Y.Z" --label "chore" --base main
    ```
